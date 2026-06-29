@@ -48,6 +48,5 @@ export class ErrorStateComponent {
   readonly message = input<string>('An error occurred while fetching data. Please try again.');
   readonly showRetry = input<boolean>(true);
 
-  /** Emits when the user clicks "Try again". */
   readonly retry = output<void>();
 }

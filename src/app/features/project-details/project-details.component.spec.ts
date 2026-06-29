@@ -1,8 +1,4 @@
-/**
- * TEST 4 — ProjectDetailsComponent
- * Verifies that the details page renders the repo name and key stats
- * from the API response.
- */
+
 import { ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import {
@@ -31,7 +27,6 @@ describe('ProjectDetailsComponent', () => {
     fixture = TestBed.createComponent(ProjectDetailsComponent);
     httpMock = TestBed.inject(HttpTestingController);
 
-    // Simulate the router binding :owner and :name as signal inputs
     fixture.componentRef.setInput('owner', 'octocat');
     fixture.componentRef.setInput('name', 'hello-world');
 
@@ -41,7 +36,7 @@ describe('ProjectDetailsComponent', () => {
   afterEach(() => httpMock.verify());
 
   it('should display the repository name and stats after the API responds', fakeAsync(() => {
-    // Flush the GET /repos/octocat/hello-world request
+
     const req = httpMock.expectOne(
       'https://api.github.com/repos/octocat/hello-world'
     );
@@ -55,19 +50,16 @@ describe('ProjectDetailsComponent', () => {
       })
     );
 
-    tick(); // let resource() resolve the Promise
+    tick();
     fixture.detectChanges();
 
     const text: string = fixture.debugElement.nativeElement.textContent;
 
-    // Repo name appears in the heading
     const heading = fixture.debugElement.query(By.css('h1'));
     expect(heading.nativeElement.textContent.trim()).toBe('hello-world');
 
-    // Stars and forks are formatted and visible
-    // formatCount(5000) → "5.0k" (one decimal place)
     expect(text).toContain('5.0k');
-    expect(text).toContain('900'); // 900 stays as-is (below 1000 threshold)
-    expect(text).toContain('Go');  // language badge
+    expect(text).toContain('900');
+    expect(text).toContain('Go');
   }));
 });

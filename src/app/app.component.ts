@@ -14,7 +14,7 @@ import { RouterOutlet, RouterLink } from '@angular/router';
   template: `
     <div class="min-h-screen bg-slate-50 dark:bg-slate-900 transition-colors duration-200">
 
-      <!-- Top navigation bar -->
+
       <nav
         class="sticky top-0 z-50 border-b border-slate-200 dark:border-slate-800
                bg-white/80 dark:bg-slate-900/80 backdrop-blur-sm"
@@ -22,7 +22,7 @@ import { RouterOutlet, RouterLink } from '@angular/router';
       >
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-14 flex items-center justify-between">
 
-          <!-- Brand -->
+
           <a
             routerLink="/dashboard"
             class="flex items-center gap-2 font-semibold text-slate-900 dark:text-white
@@ -35,7 +35,7 @@ import { RouterOutlet, RouterLink } from '@angular/router';
             GitTrend
           </a>
 
-          <!-- Dark mode toggle -->
+
           <button
             class="p-2 rounded-lg text-slate-500 dark:text-slate-400
                    hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
@@ -44,13 +44,13 @@ import { RouterOutlet, RouterLink } from '@angular/router';
             [attr.aria-pressed]="isDark()"
           >
             @if (isDark()) {
-              <!-- Sun icon -->
+
               <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                   d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364-6.364-.707.707M6.343 17.657l-.707.707M17.657 17.657l-.707-.707M6.343 6.343l-.707-.707M12 8a4 4 0 1 0 0 8 4 4 0 0 0 0-8Z"/>
               </svg>
             } @else {
-              <!-- Moon icon -->
+
               <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                   d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79Z"/>
@@ -60,7 +60,7 @@ import { RouterOutlet, RouterLink } from '@angular/router';
         </div>
       </nav>
 
-      <!-- Routed page content -->
+
       <router-outlet />
     </div>
   `,
@@ -69,7 +69,7 @@ export class AppComponent implements OnInit {
   protected readonly isDark = signal(false);
 
   ngOnInit(): void {
-    // Restore the user's saved preference across sessions
+
     const saved = localStorage.getItem('theme');
     const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
     const dark = saved ? saved === 'dark' : prefersDark;
@@ -82,7 +82,7 @@ export class AppComponent implements OnInit {
 
   private applyTheme(dark: boolean): void {
     this.isDark.set(dark);
-    // Tailwind's `class` dark-mode strategy: adding "dark" to <html> enables dark variants
+
     document.documentElement.classList.toggle('dark', dark);
     localStorage.setItem('theme', dark ? 'dark' : 'light');
   }

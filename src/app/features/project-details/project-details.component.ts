@@ -20,7 +20,6 @@ import { ErrorStateComponent } from '../../shared/error-state/error-state.compon
   template: `
     <main class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
 
-      <!-- Back button -->
       <button
         class="flex items-center gap-2 text-sm text-slate-500 dark:text-slate-400
                hover:text-slate-700 dark:hover:text-slate-200 mb-8 transition-colors"
@@ -34,7 +33,7 @@ import { ErrorStateComponent } from '../../shared/error-state/error-state.compon
       </button>
 
       @if (repoData.isLoading()) {
-        <!-- Loading state: a single tall skeleton -->
+
         <div class="space-y-4">
           <div class="h-8 w-1/2 rounded bg-slate-200 dark:bg-slate-700 animate-pulse"></div>
           <div class="h-4 w-3/4 rounded bg-slate-200 dark:bg-slate-700 animate-pulse"></div>
@@ -49,7 +48,6 @@ import { ErrorStateComponent } from '../../shared/error-state/error-state.compon
       } @else {
         @let repo = repoData.value()!;
 
-        <!-- Header: avatar, name, description -->
         <div class="flex items-start gap-4 mb-8">
           <img
             [src]="repo.owner.avatar_url"
@@ -79,7 +77,6 @@ import { ErrorStateComponent } from '../../shared/error-state/error-state.compon
           </div>
         </div>
 
-        <!-- Stat chips -->
         <div class="flex flex-wrap gap-3 mb-8">
           <div class="stat-chip">
             <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 16 16" aria-hidden="true">
@@ -124,7 +121,6 @@ import { ErrorStateComponent } from '../../shared/error-state/error-state.compon
           }
         </div>
 
-        <!-- Topics -->
         @if (repo.topics && repo.topics.length) {
           <div class="mb-8">
             <h2 class="text-xs font-semibold uppercase tracking-wider text-slate-500
@@ -145,7 +141,6 @@ import { ErrorStateComponent } from '../../shared/error-state/error-state.compon
           </div>
         }
 
-        <!-- Metadata -->
         <div class="grid grid-cols-2 sm:grid-cols-3 gap-4 bg-slate-50 dark:bg-slate-800/50
                     rounded-xl p-5 mb-8 text-sm">
           <div>
@@ -162,7 +157,6 @@ import { ErrorStateComponent } from '../../shared/error-state/error-state.compon
           </div>
         </div>
 
-        <!-- CTA -->
         <a
           [href]="repo.html_url"
           target="_blank"
@@ -181,20 +175,13 @@ import { ErrorStateComponent } from '../../shared/error-state/error-state.compon
   `,
 })
 export class ProjectDetailsComponent {
-  /**
-   * Route params arrive here as signal inputs thanks to withComponentInputBinding().
-   * No need to inject ActivatedRoute — the router binds :owner and :name directly.
-   */
+
   readonly owner = input.required<string>();
   readonly name = input.required<string>();
 
   private readonly githubService = inject(GithubService);
   private readonly location = inject(Location);
 
-  /**
-   * resource() reads owner() and name() inside `request`, so it automatically
-   * re-fetches if the route params change (e.g. user navigates between two repos).
-   */
   protected readonly repoData = resource({
     request: () => ({ owner: this.owner(), name: this.name() }),
     loader: ({ request }) =>
@@ -225,7 +212,6 @@ export class ProjectDetailsComponent {
     this.formatDate(this.repoData.value()?.updated_at)
   );
 
-  /** Uses the browser history stack — the back button uses the same mechanism. */
   protected goBack(): void {
     this.location.back();
   }

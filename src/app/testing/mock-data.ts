@@ -1,6 +1,5 @@
 import { Repository, SearchResult } from '../core/models/repository.model';
 
-/** Creates a minimal Repository object suitable for use in tests. */
 export function createMockRepo(overrides: Partial<Repository> = {}): Repository {
   return {
     id: 1,
@@ -27,7 +26,6 @@ export function createMockRepo(overrides: Partial<Repository> = {}): Repository 
   };
 }
 
-/** Creates a SearchResult envelope containing N mock repos. */
 export function createMockSearchResult(count = 20): SearchResult {
   return {
     total_count: count,

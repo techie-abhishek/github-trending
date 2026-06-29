@@ -14,14 +14,12 @@ import { RepoCardComponent } from '../../shared/repo-card/repo-card.component';
 import { SkeletonLoaderComponent } from '../../shared/skeleton-loader/skeleton-loader.component';
 import { ErrorStateComponent } from '../../shared/error-state/error-state.component';
 
-/** Labels shown in the filter toggle buttons. */
 const PERIOD_LABELS: Record<TrendingPeriod, string> = {
   daily: 'Today',
   weekly: 'This Week',
   monthly: 'This Month',
 };
 
-/** Drive exactly 20 skeleton cards while loading — no magic number in the template. */
 const SKELETON_ITEMS = Array.from({ length: 20 });
 
 @Component({
@@ -30,7 +28,7 @@ const SKELETON_ITEMS = Array.from({ length: 20 });
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [RepoCardComponent, SkeletonLoaderComponent, ErrorStateComponent],
   template: `
-    <!-- Rate-limit warning banner — only visible when ≤10 requests remain -->
+
     @if (rateLimitService.isLow()) {
       <div
         class="bg-amber-50 dark:bg-amber-900/30 border-b border-amber-200
@@ -44,7 +42,7 @@ const SKELETON_ITEMS = Array.from({ length: 20 });
     }
 
     <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-      <!-- Page header -->
+
       <div class="mb-8">
         <h1 class="text-2xl font-bold text-slate-900 dark:text-white mb-1">
           Trending Repositories
@@ -54,7 +52,6 @@ const SKELETON_ITEMS = Array.from({ length: 20 });
         </p>
       </div>
 
-      <!-- Period filter toggle -->
       <div
         class="inline-flex rounded-lg border border-slate-200 dark:border-slate-700
                bg-slate-50 dark:bg-slate-800/50 p-1 mb-8"
@@ -76,11 +73,6 @@ const SKELETON_ITEMS = Array.from({ length: 20 });
         }
       </div>
 
-      <!--
-        @defer delays the grid render until after the browser has painted the header.
-        The @placeholder shows skeleton cards for that first frame so the layout
-        doesn't jump — then the real content takes over immediately.
-      -->
       @defer (on immediate) {
         @if (trendingData.isLoading()) {
           <div
@@ -127,7 +119,6 @@ export class DashboardComponent {
   protected readonly rateLimitService = inject(RateLimitService);
   private readonly githubService = inject(GithubService);
 
-  /** The currently selected time period — changing this re-runs the resource loader. */
   protected readonly activePeriod = signal<TrendingPeriod>('weekly');
 
   protected readonly periodEntries = (
@@ -136,19 +127,6 @@ export class DashboardComponent {
 
   protected readonly skeletonItems = SKELETON_ITEMS;
 
-  /**
-   * resource() is Angular 19's signal-native data-fetching primitive.
-   *
-   * How it works:
-   *  - `request` is a function that returns the "key" for this fetch.
-   *    Angular tracks which signals are read inside it. When any of them
-   *    change, the loader is automatically re-run.
-   *  - `loader` receives the resolved request value and returns a Promise.
-   *  - The resource exposes .isLoading(), .value(), .error(), and .reload().
-   *
-   * When activePeriod() changes (user clicks a filter button), the resource
-   * sees the new request value, marks itself as loading, and fires the loader.
-   */
   protected readonly trendingData = resource({
     request: () => this.activePeriod(),
     loader: ({ request: period }) =>

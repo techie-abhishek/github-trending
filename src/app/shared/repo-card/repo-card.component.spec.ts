@@ -1,8 +1,4 @@
-/**
- * TEST 2 — RepoCardComponent
- * Verifies that the card correctly displays a repository's name, star count,
- * and language badge from its input signal.
- */
+
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { provideRouter } from '@angular/router';
@@ -15,14 +11,12 @@ describe('RepoCardComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [RepoCardComponent],
-      // Router is needed because the card calls router.navigate on click
+
       providers: [provideRouter([])],
     }).compileComponents();
 
     fixture = TestBed.createComponent(RepoCardComponent);
 
-    // Set the required input — Angular 19's signal input() requires
-    // TestBed.runInInjectionContext or componentRef.setInput()
     fixture.componentRef.setInput('repo', createMockRepo({
       name: 'awesome-project',
       stargazers_count: 12300,
