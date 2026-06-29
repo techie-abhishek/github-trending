@@ -1,0 +1,1 @@
+import{L as e,ja as a,lb as r}from"./chunk-S4GUYZTJ.js";var s=10,t=class i{_remaining=a(-1);remaining=this._remaining.asReadonly();isLow=r(()=>this._remaining()>=0&&this._remaining()<=s);setRemaining(n){this._remaining.set(n)}static \u0275fac=function(o){return new(o||i)};static \u0275prov=e({token:i,factory:i.\u0275fac,providedIn:"root"})};export{t as a};
