@@ -1,0 +1,35 @@
+/* Tailwind's three layers: base (resets), components (reusable classes), utilities (atomic classes) */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* stat-chip: the small info badge used on the project details page.
+   Defined here as a component class so it can be reused across templates
+   without repeating the same 5 utility classes everywhere. */
+@layer components {
+  .stat-chip {
+    @apply flex items-center gap-1.5 px-3 py-1.5 text-sm
+           bg-slate-100 dark:bg-slate-800
+           text-slate-700 dark:text-slate-300
+           rounded-full border border-slate-200 dark:border-slate-700;
+  }
+}
+
+/* Smooth cross-route animation using the View Transitions API.
+   Angular's withViewTransitions() triggers this automatically on navigation. */
+::view-transition-old(root) {
+  animation: 150ms ease-out fade-out;
+}
+::view-transition-new(root) {
+  animation: 200ms ease-in fade-in;
+}
+
+@keyframes fade-out {
+  from { opacity: 1; }
+  to   { opacity: 0; }
+}
+
+@keyframes fade-in {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
